@@ -35,13 +35,26 @@ exit: access this option using number 4 and exit the py file
 '''
 
 import os
+import time
+
+# define clear function to clear screen when called 
+# https://www.geeksforgeeks.org/clear-screen-python/
+def clear():
+
+    # for windows
+    if os.name == 'nt':
+        _ = os.system('cls')
+
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = os.system('clear')
 
 
 # function to create the list.txt
 def createSaveFile():
     
     # create the list.txt and write 'empty' string into it
-    with open ('/home/andrio/Downloads/Not-To-Do List/list.txt', 'a') as f:
+    with open ('list.txt', 'a') as f:
         f.write('empty')    
     
 
@@ -50,7 +63,7 @@ def createSaveFile():
 def readSavedFile():
     
     # open the list.txt and read its content
-    with open ('/home/andrio/Downloads/Not-To-Do List/list.txt', 'r') as f:    
+    with open ('list.txt', 'r') as f:    
         readData = f.read()
         
         # if file contain 'empty' string, print the message
@@ -62,18 +75,18 @@ def readSavedFile():
             print(readData)
 
 
-# function to create folder to save data of app. only used on fist time of opening app
-def saveFile():
+## function to create folder to save data of app. only used on fist time of opening app
+#def saveFile():
 
-    # path to new folder to store list.txt
-    saveLocation = r'/home/andrio/Downloads/Not-To-Do List'
+    ## path to new folder to store list.txt
+    #saveLocation = r'/home/andrio/Downloads/Not-To-Do List'
     
-    # if the path doesnt exist
-    if not os.path.exists(saveLocation):
-        # create a path
-        os.makedirs(saveLocation)
-        # create the list.txt inside the path
-        createSaveFile()  
+    ## if the path doesnt exist
+    #if not os.path.exists(saveLocation):
+        ## create a path
+        #os.makedirs(saveLocation)
+        ## create the list.txt inside the path
+        #createSaveFile()  
     
 
 def viewMenu():
@@ -89,7 +102,7 @@ def viewList():
         readSavedFile() 
         userSelectedOptionViewList = input("Press 'q' to exit to Main Menu\n")
         if userSelectedOptionViewList == 'q': 
-            viewMenu()
+            exit()
             
     
     
@@ -106,9 +119,10 @@ def exitApp():
     exit('Have a Good Day')
 
 
-# called when running app for first time to create directory and list.txt
-saveFile()
+## called when running app for first time to create directory and list.txt
+#saveFile()
 
+createSaveFile()
 
 # call viewMenu funtion to display the menu
 viewMenu()
@@ -130,6 +144,8 @@ menuOptionsFuncions = {
     4 : exitApp,
 }
 
+
+
 # asking user to select option and store it in a variable
 userSelectedOption = int(input('Select your option: '))
 
@@ -138,6 +154,10 @@ for num in menuOptions.keys():
     
     # if the number selected by user match the key in dictionary, print the value and exit menuOptions iteration loop 
     if userSelectedOption == num:
+        # added 2 second delay 
+        time.sleep(2)
+        # clear screen
+        clear()        
         print(menuOptions[num])
     
         # iterate through dictionary keys to call function
